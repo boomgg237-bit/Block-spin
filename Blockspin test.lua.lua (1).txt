@@ -296,14 +296,6 @@ task.wait(7)
 
 
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local GuiService = game:GetService('GuiService')
-local VirtualInputManager = game:GetService('VirtualInputManager')
-local Creator = require(ReplicatedStorage.Modules.Game.CharacterCreator.CharacterCreator)
-local Net = require(ReplicatedStorage.Modules.Core.Net)
-local Util = require(ReplicatedStorage.Modules.Core.Util)
-local UI = require(ReplicatedStorage.Modules.Core.UI)
-local Char = require(ReplicatedStorage.Modules.Core.Char)
 
 if not _G.Bypass then 
 local func = getupvalue(Net.get, 2)
@@ -447,9 +439,7 @@ local LocalPlayer = Players.LocalPlayer
 local Network = require(game.ReplicatedStorage.Modules.Core.Net)
 
 -- WINDUI + CONFIG
-local WindUI = loadstring(game:HttpGet(
-    "https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"
-))()
+
 
 local s = loadstring(game:HttpGet(
     "https://raw.githubusercontent.com/DinhubPom/Project/refs/heads/main/Loader/s.lua"
@@ -3183,7 +3173,7 @@ serverTab:Button({
 })
 
 
-local Players = game:GetService("Players")
+
 local Stats = game:GetService("Stats")
 
 local width = 62 
