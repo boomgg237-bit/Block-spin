@@ -352,8 +352,8 @@ local Window = WindUI:CreateWindow({
     Title = "Dipper HUB | Premium [ BLOCK SPIN] ",
     Author = "Dipper TEAM",
     Folder = "N HUB",
-    Size = UDim2.fromOffset(700, 540),
-    Background = "rbxassetid://124013844566613",
+    Size = UDim2.fromOffset(500, 850),
+    Background = "Dark",
     Transparent = true,
     Resizable = true,
 
@@ -2838,7 +2838,7 @@ local plsraknet = Raknet or raknet
 
 local Toggled = s:g("Char.desync", false)
 
-ChaterTabTab:Toggle({
+ChaterTab:Toggle({
     Title = "Desync is op",
     Desc = "ล่องหน",
     Icon = "bird",
