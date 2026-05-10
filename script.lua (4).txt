@@ -215,58 +215,39 @@ end
             
 
 
+local Players = game:GetService("Players")
 local GuiService = game:GetService("GuiService")
 local VirtualInputManager = game:GetService("VirtualInputManager")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-
-
-
-local GuiService = game:GetService('GuiService')
-local VirtualInputManager = game:GetService('VirtualInputManager')
-local Creator = require(ReplicatedStorage.Modules.Game.CharacterCreator.CharacterCreator)
 local Net = require(ReplicatedStorage.Modules.Core.Net)
-local Util = require(ReplicatedStorage.Modules.Core.Util)
-local UI = require(ReplicatedStorage.Modules.Core.UI)
-local Char = require(ReplicatedStorage.Modules.Core.Char)
 
+-- Bypass
 if not _G.Bypass then 
-local func = getupvalue(Net.get, 2)
-if func then
-    setconstant(func, 3, "KUYIENGOKUYIENGO")
-    setconstant(func, 4, "KUYIENGOKUYIENGO")
-end
-_G.Bypass = true 
-end
-
-if not getgenv().ACBYPASS then
-    pcall(function()
-        local NetMod = require(game.ReplicatedStorage:WaitForChild("Modules"):WaitForChild("Core"):WaitForChild("Net"))
-        local func = debug.getupvalue(NetMod.get, 2)
-        if func then
-            debug.setconstant(func, 3, "___Bypass")
-            debug.setconstant(func, 4, "___Bypass")
-            getgenv().ACBYPASS = true
-        end
-    end)
+    local func = getupvalue(Net.get, 2)
+    if func then
+        setconstant(func, 3, "KUYIENGOKUYIENGO")
+        setconstant(func, 4, "KUYIENGOKUYIENGO")
+    end
+    _G.Bypass = true 
 end
 
-local old; old = hookfunction(Net.send, function(...)
-    local d = {...} 
-    if d[1] == 'leave_character_creator' or d[1] == 'player_created_outfit' then 
+-- Hook Net.send
+local oldSend; 
+oldSend = hookfunction(Net.send, function(...)
+    local args = {...} 
+    if args[1] == 'leave_character_creator' or args[1] == 'player_created_outfit' then 
         return nil
     end
-    return old(...)
+    return oldSend(...)
 end)
 
 
- 
-task.wait(2.5)
-
-function pressEnter(guiObject)
+local function pressEnter(guiObject)
     if not guiObject then return end
-
     GuiService.SelectedObject = guiObject
     VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
     task.wait(0.05)
@@ -276,48 +257,24 @@ function pressEnter(guiObject)
 end
 
 
-local splashGui = playerGui:FindFirstChild("SplashScreenGui")
-if splashGui and splashGui.Enabled then
-    local frame = splashGui:FindFirstChild("Frame")
-    local playButton = frame and frame:FindFirstChild("PlayButton")
-
-    pressEnter(playButton)
+task.wait(1)
+local editAvatarButton = playerGui:FindFirstChild("SplashScreenGui"):FindFirstChild("Frame"):FindFirstChild("Frame"):FindFirstChild("ServersFrame"):FindFirstChild("EditAvatarButton")
+if editAvatarButton then
+    pressEnter(editAvatarButton)
 end
-
 
 task.wait(4)
-
-
-local characterCreator = playerGui:FindFirstChild("CharacterCreator")
-if characterCreator then
-    local menuFrame = characterCreator:FindFirstChild("MenuFrame")
-    local skipButton = menuFrame and menuFrame:FindFirstChild("AvatarMenuSkipButton")
-
-    pressEnter(skipButton)
+local itemsNextButton = playerGui:FindFirstChild("CharacterCreator"):FindFirstChild("EditorFrame"):FindFirstChild("ItemsNextButton")
+if itemsNextButton then
+    for i = 1, 5 do
+        pressEnter(itemsNextButton)
+        task.wait(0.5)
+    end
 end
 
-
-
-task.wait(2.5)
-
-
+task.wait(2)
 replicatesignal(game.Players.LocalPlayer.Kill)
-
-
 task.wait(7)
-
-
-
-
-if not _G.Bypass then 
-local func = getupvalue(Net.get, 2)
-if func then
-    setconstant(func, 3, "KUYIENGOKUYIENGO")
-    setconstant(func, 4, "KUYIENGOKUYIENGO")
-end
-_G.Bypass = true 
-end
-
 Net.send('death_screen_request_respawn')
 
 
